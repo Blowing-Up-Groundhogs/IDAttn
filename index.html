@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <!-- Primary Meta Tags -->
+  <meta name="title" content="Shifting the Breaking Point of Flow Matching for Multi-Instance Editing">
+  <meta name="description" content="Instance-Disentangled Attention (IDAttn) partitions joint attention in flow-matching MMDiTs to bind per-instance text prompts to spatial regions, enabling single-pass, disentangled multi-instance image editing.">
+  <meta name="keywords" content="flow matching, multi-instance editing, attention, MMDiT, FLUX, image editing, infographics, InfoEdBench, machine learning, computer vision">
+  <meta name="author" content="Carmine Zaccagnino, Fabio Quattrini, Enis Simsar, Marta Tintoré Gazulla, Rita Cucchiara, Alessio Tonioni, Silvia Cascianelli">
+  <meta name="robots" content="index, follow">
+  <meta name="language" content="English">
+
+  <!-- Open Graph / Facebook -->
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="AImageLab — University of Modena and Reggio Emilia">
+  <meta property="og:title" content="Shifting the Breaking Point of Flow Matching for Multi-Instance Editing">
+  <meta property="og:description" content="Instance-Disentangled Attention (IDAttn): single-pass, disentangled multi-instance image editing with flow matching.">
+  <meta property="og:url" content="https://idattn.carminezacc.com/">
+  <meta property="og:image" content="https://idattn.carminezacc.com/static/images/teaser.png">
+  <meta property="og:image:alt" content="Qualitative multi-instance editing results">
+
+  <!-- Twitter -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Shifting the Breaking Point of Flow Matching for Multi-Instance Editing">
+  <meta name="twitter:description" content="Instance-Disentangled Attention (IDAttn): single-pass, disentangled multi-instance image editing with flow matching.">
+  <meta name="twitter:image" content="https://idattn.carminezacc.com/static/images/teaser.png">
+
+  <!-- Academic/Research Specific -->
+  <meta name="citation_title" content="Shifting the Breaking Point of Flow Matching for Multi-Instance Editing">
+  <meta name="citation_author" content="Zaccagnino, Carmine">
+  <meta name="citation_author" content="Quattrini, Fabio">
+  <meta name="citation_author" content="Simsar, Enis">
+  <meta name="citation_author" content="Tintoré Gazulla, Marta">
+  <meta name="citation_author" content="Cucchiara, Rita">
+  <meta name="citation_author" content="Tonioni, Alessio">
+  <meta name="citation_author" content="Cascianelli, Silvia">
+  <meta name="citation_publication_date" content="2026">
+  <meta name="citation_conference_title" content="International Conference on Machine Learning (ICML)">
+  <meta name="citation_pdf_url" content="https://idattn.carminezacc.com/static/pdfs/paper.pdf">
+
+  <meta name="theme-color" content="#2563eb">
+
+  <title>Shifting the Breaking Point of Flow Matching for Multi-Instance Editing</title>
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/x-icon" href="static/images/favicon.ico">
+  <link rel="apple-touch-icon" href="static/images/favicon.ico">
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="static/css/bulma.min.css">
+  <link rel="stylesheet" href="static/css/index.css">
+  <link rel="stylesheet" href="static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- JS -->
+  <script defer src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="static/js/fontawesome.all.min.js"></script>
+  <script defer src="static/js/bulma-carousel.min.js"></script>
+  <script defer src="static/js/bulma-slider.min.js"></script>
+  <script defer src="static/js/index.js"></script>
+
+  <!-- Structured Data -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "ScholarlyArticle",
+    "headline": "Shifting the Breaking Point of Flow Matching for Multi-Instance Editing",
+    "description": "Instance-Disentangled Attention (IDAttn) partitions joint attention in flow-matching MMDiTs to bind per-instance text prompts to spatial regions, enabling single-pass, disentangled multi-instance image editing.",
+    "author": [
+      {"@type": "Person", "name": "Carmine Zaccagnino", "affiliation": {"@type": "Organization", "name": "University of Modena and Reggio Emilia"}},
+      {"@type": "Person", "name": "Fabio Quattrini", "affiliation": {"@type": "Organization", "name": "University of Modena and Reggio Emilia"}},
+      {"@type": "Person", "name": "Enis Simsar", "affiliation": {"@type": "Organization", "name": "ETH Zurich"}},
+      {"@type": "Person", "name": "Marta Tintoré Gazulla", "affiliation": {"@type": "Organization", "name": "Google"}},
+      {"@type": "Person", "name": "Rita Cucchiara", "affiliation": {"@type": "Organization", "name": "University of Modena and Reggio Emilia"}},
+      {"@type": "Person", "name": "Alessio Tonioni", "affiliation": {"@type": "Organization", "name": "Google"}},
+      {"@type": "Person", "name": "Silvia Cascianelli", "affiliation": {"@type": "Organization", "name": "University of Modena and Reggio Emilia"}}
+    ],
+    "datePublished": "2026",
+    "publisher": {"@type": "Organization", "name": "International Conference on Machine Learning (ICML)"},
+    "url": "https://idattn.carminezacc.com/",
+    "image": "https://idattn.carminezacc.com/static/images/teaser.png",
+    "isAccessibleForFree": true,
+    "license": "https://creativecommons.org/licenses/by-sa/4.0/"
+  }
+  </script>
+</head>
+<body>
+
+  <!-- Scroll to Top Button -->
+  <button class="scroll-to-top" onclick="scrollToTop()" title="Scroll to top" aria-label="Scroll to top">
+    <i class="fas fa-chevron-up"></i>
+  </button>
+
+  <!-- More Works Dropdown -->
+  <div class="more-works-container">
+    <button class="more-works-btn" onclick="toggleMoreWorks()" title="View More Works from Our Lab">
+      <i class="fas fa-flask"></i>
+      More Works
+      <i class="fas fa-chevron-down dropdown-arrow"></i>
+    </button>
+    <div class="more-works-dropdown" id="moreWorksDropdown">
+      <div class="dropdown-header">
+        <h4>More Works from Our Lab</h4>
+        <button class="close-btn" onclick="toggleMoreWorks()">
+          <i class="fas fa-times"></i>
+        </button>
+      </div>
+      <div class="works-list">
+        <a href="https://eruku.carminezacc.com/" class="work-item" target="_blank" rel="noopener">
+          <div class="work-info">
+            <h5>Eruku: Autoregressive Styled Text Image Generation, but Make it Reliable</h5>
+            <p>Faithful and readable styled text image generation with an autoregressive model.</p>
+            <span class="work-venue">WACV 2026</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+        <a href="https://github.com/Blowing-Up-Groundhogs" class="work-item" target="_blank" rel="noopener">
+          <div class="work-info">
+            <h5>Blowing Up Groundhogs</h5>
+            <p>More generative models, datasets, and tooling from the group.</p>
+            <span class="work-venue">GitHub</span>
+          </div>
+          <i class="fas fa-external-link-alt"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <main id="main-content">
+  <section class="hero">
+    <div class="hero-body">
+      <div class="container is-max-desktop">
+        <div class="columns is-centered">
+          <div class="column has-text-centered">
+            <h1 class="title is-1 publication-title">Shifting the Breaking Point of Flow Matching for Multi-Instance Editing</h1>
+            <div class="is-size-5 publication-authors">
+              <span class="author-block">Carmine Zaccagnino<sup>*,1</sup>,</span>
+              <span class="author-block">Fabio Quattrini<sup>*,1</sup>,</span>
+              <span class="author-block">Enis Simsar<sup>2</sup>,</span>
+              <span class="author-block">Marta Tintoré Gazulla<sup>3</sup>,</span>
+              <span class="author-block">Rita Cucchiara<sup>1</sup>,</span>
+              <span class="author-block">Alessio Tonioni<sup>3</sup>,</span>
+              <span class="author-block">Silvia Cascianelli<sup>1</sup></span>
+            </div>
+
+            <div class="is-size-5 publication-authors">
+              <span class="author-block"><sup>1</sup>University of Modena and Reggio Emilia&nbsp;&nbsp;</span>
+              <span class="author-block"><sup>2</sup>ETH Zurich&nbsp;&nbsp;</span>
+              <span class="author-block"><sup>3</sup>Google</span>
+              <br>
+              <span class="author-block"><strong>ICML 2026</strong></span>
+              <span class="eql-cntrb"><small><br><sup>*</sup>Indicates Equal Contribution</small></span>
+            </div>
+
+            <div class="column has-text-centered">
+              <div class="publication-links">
+                <!-- PDF -->
+                <span class="link-block">
+                  <a href="static/pdfs/paper.pdf" target="_blank"
+                  class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+
+              <!-- arXiv (placeholder until available) -->
+              <span class="link-block">
+                <a href="#" target="_blank"
+                class="external-link button is-normal is-rounded is-dark">
+                <span class="icon"><i class="ai ai-arxiv"></i></span>
+                <span>arXiv</span>
+              </a>
+            </span>
+
+            <!-- Code -->
+            <span class="link-block">
+              <a href="https://github.com/Blowing-Up-Groundhogs/IDAttn" target="_blank" rel="noopener"
+              class="external-link button is-normal is-rounded is-dark">
+              <span class="icon"><i class="fab fa-github"></i></span>
+              <span>Code</span>
+            </a>
+          </span>
+
+          <!-- Dataset -->
+          <span class="link-block">
+            <a href="https://huggingface.co/datasets/blowing-up-groundhogs/InfoEdBench" target="_blank" rel="noopener"
+            class="external-link button is-normal is-rounded is-dark">
+            <span class="icon">🤗</span>
+            <span>InfoEdBench</span>
+          </a>
+        </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Teaser -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="hero-body">
+      <img src="static/images/teaser.png" alt="Qualitative multi-instance editing results on Crello Edit, InfoEdit and LoMOE-Bench" style="width:100%;border-radius:8px;"/>
+      <h2 class="subtitle has-text-centered" style="margin-top:1rem;">
+        <strong>Instance-Disentangled Attention</strong> edits many regions of an image at once in a
+        <strong>single pass</strong>, keeping edits independent and the rest of the image untouched.
+        Leftmost column: source; second: edit regions; remaining columns: baselines vs. <strong>Ours</strong>.
+      </h2>
+    </div>
+  </div>
+</section>
+
+<!-- Abstract -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Flow matching models have recently emerged as an efficient alternative to diffusion, especially for
+            text-guided image generation and editing, offering faster inference through continuous-time dynamics.
+            However, existing flow-based editors predominantly support global or single-instruction edits and
+            struggle with multi-instance scenarios, where multiple parts of a reference input must be edited
+            independently without semantic interference. We identify this limitation as a consequence of globally
+            conditioned velocity fields and joint attention mechanisms, which entangle concurrent edits. To address
+            this issue, we introduce <strong>Instance-Disentangled Attention</strong>, a mechanism that partitions
+            joint attention operations, enforcing binding between instance-specific textual instructions and spatial
+            regions during velocity field estimation. We evaluate our approach on both natural image editing and a
+            newly introduced benchmark of text-dense infographics with region-level editing instructions.
+            Experimental results demonstrate that our approach promotes edit disentanglement and locality while
+            preserving global output coherence, enabling single-pass, instance-level editing.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Highlights -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Highlights</h2>
+    <div class="columns is-multiline is-centered" style="margin-top:1rem;">
+      <div class="column is-half">
+        <div class="box" style="height:100%;">
+          <h3 class="title is-5"><span class="icon-text"><span class="icon has-text-info"><i class="fas fa-vector-square"></i></span>&nbsp;<span>Instance-Disentangled Attention</span></span></h3>
+          <p>An inference-time intervention that partitions the joint attention of MMDiT blocks, binding each
+          instruction to its region and blocking cross-instance leakage — no retraining required.</p>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="box" style="height:100%;">
+          <h3 class="title is-5"><span class="icon-text"><span class="icon has-text-info"><i class="fas fa-bolt"></i></span>&nbsp;<span>Single-Pass Multi-Editing</span></span></h3>
+          <p>All edits are applied simultaneously in one inference pass, offering an efficient alternative to
+          iterative or multi-turn pipelines as the number of instances grows.</p>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="box" style="height:100%;">
+          <h3 class="title is-5"><span class="icon-text"><span class="icon has-text-info"><i class="fas fa-stream"></i></span>&nbsp;<span>Efficient Multi-Prompt Encoding</span></span></h3>
+          <p>Instructions are encoded independently and concatenated with length proportional to their semantic
+          content, ensuring isolation by construction without linear blow-up in cost.</p>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="box" style="height:100%;">
+          <h3 class="title is-5"><span class="icon-text"><span class="icon has-text-info"><i class="fas fa-database"></i></span>&nbsp;<span>InfoEdBench Benchmark</span></span></h3>
+          <p>A new benchmark of text-dense infographics with paragraph-level region annotations and editing
+          instructions, stress-testing many fine-grained edits per image.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Method -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full">
+        <h2 class="title is-3 has-text-centered">Method</h2>
+        <div class="content has-text-justified">
+          <p>
+            State-of-the-art flow-matching editors parameterize the velocity field with a Multimodal Diffusion
+            Transformer (MMDiT) and apply <em>joint attention</em> over concatenated text, latent, and context
+            tokens. Allowing every token to attend to every other token causes <em>attribute leakage</em>: concepts
+            meant for one region bleed into another as the number of edits grows.
+          </p>
+          <p>
+            <strong>Instance-Disentangled Attention (IDAttn)</strong> partitions the joint token sequence by both
+            modality and instance association, then governs information flow with an additive attention mask. We use
+            two regimes: a <strong>disentanglement</strong> mask <em>M<sup>dis</sup></em> that isolates each instance
+            (its text, latent, and context tokens attend only to one another), and a <strong>harmonization</strong>
+            mask <em>M<sup>har</sup></em> that relaxes this to restore global coherence. Following the empirical
+            behavior of transformer layers, <em>M<sup>har</sup></em> is applied in the early and late layers and
+            <em>M<sup>dis</sup></em> in the central layers, localizing edits without breaking the global flow.
+          </p>
+        </div>
+        <figure class="image" style="max-width:740px;margin:1.5rem auto 0;">
+          <img src="static/images/method_masks.png" alt="Logic visualization of the proposed joint attention masks"/>
+        </figure>
+        <p class="has-text-centered is-size-6" style="margin-top:0.75rem;">
+          Logic of the proposed joint attention masks. Global prompt and background tokens stay self-consistent,
+          while each instance's text, latent, and context tokens attend only within the instance.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Benchmark -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-full">
+        <h2 class="title is-3 has-text-centered">InfoEdBench: Infographics Editing Benchmark</h2>
+        <div class="content has-text-justified">
+          <p>
+            Existing multi-instance benchmarks are limited in both the number of editable regions per image and
+            overall scale. We argue that <strong>infographics</strong> — text-dense, aesthetically coherent
+            information visualizations — are an ideal testbed: a single uncontrolled edit can alter the semantics of
+            the whole image, and text regions can be annotated automatically with detection/OCR pipelines. Each
+            instruction takes the form <em>Change &lsquo;SRC&rsquo; to &lsquo;TGT&rsquo;</em>. The benchmark has two
+            subsets of increasing difficulty:
+          </p>
+          <ul>
+            <li><strong>Crello Edit</strong> — paired samples derived from layer-annotated graphic designs, with text
+            translated into French, German, Italian, and Spanish and re-rendered using original font metadata
+            (1,512 training / 4,367 test samples; 1–25 edits each).</li>
+            <li><strong>InfoEdit</strong> — real, professionally-made, open-source English infographics with large,
+            high-resolution layouts and many small text boxes.</li>
+          </ul>
+          <p class="has-text-centered">
+            <a href="https://huggingface.co/datasets/blowing-up-groundhogs/InfoEdBench" target="_blank" rel="noopener"
+            class="button is-rounded is-dark">
+              <span class="icon">🤗</span><span>Get the dataset on Hugging Face</span>
+            </a>
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- Results -->
+<section class="section hero is-light">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Results</h2>
+
+    <div class="columns is-centered">
+      <div class="column is-full">
+        <h3 class="title is-5 has-text-centered">Natural image multi-instance editing</h3>
+        <figure class="image">
+          <img src="static/images/results_natural.png" alt="Qualitative results of IDAttn on natural images with overlapping bounding boxes" style="border-radius:8px;"/>
+        </figure>
+        <p class="has-text-centered is-size-6" style="margin-top:0.75rem;">
+          IDAttn applied with imprecise and overlapping bounding boxes: edits remain localized and disentangled.
+        </p>
+      </div>
+    </div>
+
+    <div class="columns is-centered" style="margin-top:1.5rem;">
+      <div class="column is-three-quarters">
+        <h3 class="title is-5 has-text-centered">Quantitative results on LoMOE-Bench</h3>
+        <div class="table-container">
+          <table class="table is-fullwidth is-striped is-hoverable">
+            <thead>
+              <tr>
+                <th>Method</th>
+                <th>Tgt CLIP ↑</th>
+                <th>Bg LPIPS ↓</th>
+                <th>Loc CLIP ↑</th>
+                <th>AR&nbsp;% ↑</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr><td>FLUX</td><td>24.71</td><td>0.078</td><td>0.266</td><td>-0.059</td></tr>
+              <tr><td>FLUX&nbsp;&micro;T</td><td>25.71</td><td>0.074</td><td>0.282</td><td>0.550</td></tr>
+              <tr><td>FLUX w/ v.c.</td><td>24.49</td><td>0.072</td><td>0.267</td><td>0.265</td></tr>
+              <tr><td><strong>Ours</strong></td><td><strong>25.60</strong></td><td><strong>0.073</strong></td><td><strong>0.277</strong></td><td><strong>0.574</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="has-text-centered is-size-7">
+          Our approach improves prompt following (AR%) and target alignment while preserving the background,
+          performing edits in a single pass.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BibTeX citation -->
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <div class="bibtex-header">
+      <h2 class="title">BibTeX</h2>
+      <button class="copy-bibtex-btn" onclick="copyBibTeX()" title="Copy BibTeX to clipboard">
+        <i class="fas fa-copy"></i>
+        <span class="copy-text">Copy</span>
+      </button>
+    </div>
+    <pre id="bibtex-code"><code>@inproceedings{zaccagnino2026idattn,
+  title     = {{Shifting the Breaking Point of Flow Matching for Multi-Instance Editing}},
+  author    = {Zaccagnino, Carmine and Quattrini, Fabio and Simsar, Enis and
+               Tintor\'e Gazulla, Marta and Cucchiara, Rita and Tonioni, Alessio and
+               Cascianelli, Silvia},
+  booktitle = {Proceedings of the International Conference on Machine Learning (ICML)},
+  year      = {2026}
+}</code></pre>
+  </div>
+</section>
+
+  <footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This page was built using the <a href="https://github.com/eliahuhorwitz/Academic-project-page-template" target="_blank" rel="noopener">Academic Project Page Template</a> which was adopted from the <a href="https://nerfies.github.io" target="_blank" rel="noopener">Nerfies</a> project page.
+            You are free to borrow the source code of this website, we just ask that you link back to this page in the footer. <br> This website is licensed under a <a rel="license" href="http://creativecommons.org/licenses/by-sa/4.0/" target="_blank">Creative Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+  </main>
+  </body>
+</html>
