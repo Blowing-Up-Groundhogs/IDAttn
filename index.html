@@ -349,49 +349,17 @@
   </div>
 </section>
 
-<!-- Results -->
-<section class="section hero is-light">
-  <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Results</h2>
-
-    <div class="columns is-centered">
-      <div class="column is-full">
-        <h3 class="title is-5 has-text-centered">Natural image multi-instance editing</h3>
-        <figure class="image">
-          <img src="static/images/results_natural.png" alt="Qualitative results of IDAttn on natural images with overlapping bounding boxes" style="border-radius:8px;"/>
-        </figure>
-        <p class="has-text-centered is-size-6" style="margin-top:0.75rem;">
-          IDAttn applied with imprecise and overlapping bounding boxes: edits remain localized and disentangled.
-        </p>
-      </div>
-    </div>
-
-    <div class="columns is-centered" style="margin-top:1.5rem;">
-      <div class="column is-three-quarters">
-        <h3 class="title is-5 has-text-centered">Quantitative results on LoMOE-Bench</h3>
-        <div class="table-container">
-          <table class="table is-fullwidth is-striped is-hoverable">
-            <thead>
-              <tr>
-                <th>Method</th>
-                <th>Tgt CLIP ↑</th>
-                <th>Bg LPIPS ↓</th>
-                <th>Loc CLIP ↑</th>
-                <th>AR&nbsp;% ↑</th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr><td>FLUX</td><td>24.71</td><td>0.078</td><td>0.266</td><td>-0.059</td></tr>
-              <tr><td>FLUX&nbsp;&micro;T</td><td>25.71</td><td>0.074</td><td>0.282</td><td>0.550</td></tr>
-              <tr><td>FLUX w/ v.c.</td><td>24.49</td><td>0.072</td><td>0.267</td><td>0.265</td></tr>
-              <tr><td><strong>Ours</strong></td><td><strong>25.60</strong></td><td><strong>0.073</strong></td><td><strong>0.277</strong></td><td><strong>0.574</strong></td></tr>
-            </tbody>
-          </table>
+<!-- Video -->
+<section class="hero is-small is-light">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <h2 class="title is-3 has-text-centered">Video</h2>
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <div class="publication-video">
+            <iframe src="https://www.youtube.com/embed/FGUXiwbW-DY" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen></iframe>
+          </div>
         </div>
-        <p class="has-text-centered is-size-7">
-          Our approach improves prompt following (AR%) and target alignment while preserving the background,
-          performing edits in a single pass.
-        </p>
       </div>
     </div>
   </div>
