@@ -1,4 +1,4 @@
-# APITA: Attention-guided text editing with FLUX.1-Kontext
+# IDAttn
 
 This repository contains a minimal implementation of **IDAttn** (Instance-Disentangled Attention) for text editing on top of
 [FLUX.1-Kontext-dev](https://huggingface.co/black-forest-labs/FLUX.1-Kontext-dev).
