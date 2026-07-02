@@ -1,10 +1,9 @@
 # APITA: Attention-guided text editing with FLUX.1-Kontext
 
-This repository contains a minimal implementation of **APITA** (Attention-guided
-Position-aware Instance Targeting) attention for text editing on top of
+This repository contains a minimal implementation of **IDAttn** (Instance-Disentangled Attention) for text editing on top of
 [FLUX.1-Kontext-dev](https://huggingface.co/black-forest-labs/FLUX.1-Kontext-dev).
 
-APITA replaces the default joint-attention processor of the FLUX Kontext
+IDAttn replaces the default joint-attention processor of the FLUX Kontext
 transformer with a masked processor that binds each text-editing instruction to
 its target image region (defined by a bounding box). It can be run **with a
 LoRA checkpoint fine-tuned for text editing** or **directly on the base model**
